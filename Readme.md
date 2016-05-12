@@ -130,10 +130,10 @@ function consoleTimeout(text, waitTime){
 }
 
 console.log('a');
-consoleTimeout('b', 1000*3);
+consoleTimeout('b', 1000*3).then(function(){});
 ```
 
-Looking at the above example it looks more complicated to use promises. Before I show the advantange let's quickly look at what happens. `fnWithAPromise()` will return `deferred.promise` an object with a function called `.then()` attached to it. When the `setTimeout()` is completed, `deferred.resolve()` is called, with in turn calls the `.then()` function.
+Looking at the above example it looks more complicated to use promises. Before I show the advantange let's quickly look at what happens. `consoleTimeout()` will return a `deferred.promise` object with a function called `.then()` attached to it. When the `setTimeout()` is completed, `deferred.resolve()` is called, with in turn calls the function pased to `.then()`.
 
 `setTimeout()` finishes => `deferred.resolve()` is called => `.then()` is called
 
@@ -142,7 +142,9 @@ The advantage comes when we chain the function like so (CLUE for solving this wo
 ```javascript
 console.log('a');
 consoleTimeout('b', 1000*3)
-  .then(consoleTimeout('c', 1000*2));
+  .then(function(){
+    return consoleTimeout('c', 1000*2);
+  });
 ```
 It becomes trivially easy to keep on chaining more `.then()`'s and the readibility is maintained.
 
