@@ -82,7 +82,7 @@ At the moment your `<div>` is invisible and every `<div>` you add will appear in
 
 ```javascript
 var fdiv = new FallingDiv();
-fdiv.draw('20px', '#444');
+fdiv.draw(20, '#444');
 ```
 
 hint: to access the `<div>`'s css style you can do the following in your draw function `this.el.style.X = ...;` (where `X` is a css attribute).
